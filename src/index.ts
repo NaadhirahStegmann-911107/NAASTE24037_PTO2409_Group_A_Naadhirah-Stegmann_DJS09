@@ -1,17 +1,17 @@
+import { showReviewTotal, populateUser, showDetails, getTopTwoReviews } from "./utils"
+import { Permissions, LoyaltyUser } from "./enum"
+//import { Price, Country } from "./types"
+import { Review } from "./interfaces"
 const propertyContainer = document.querySelector(".properties") as HTMLElement
+const reviewContainer = document.querySelector('.reviews') as HTMLElement
+const container = document.querySelector('.container') as HTMLElement
+const button = document.querySelector('button') as HTMLElement
 const footer = document.querySelector(".footer") as HTMLElement
-import { showReviewTotal, populateUser } from "./utils"
-import { Permissions, LoyaltyUser } from "./enums"
+
 let isLoggedIn: boolean
-import { Price, Country } from "./types"
 
 //Reviews
-const reviews: {
-  name: string;
-  stars: number;
-  loyaltyUser: LoyaltyUser;
-  date: string;
-}[] = [
+const reviews: Review[] = [
   {
     name: "Sheia",
     stars: 5,
@@ -53,12 +53,12 @@ const you: {
 const properties : {
   image: string;
   title: string;
-  price: Price;
+  price: number;
   location: {
     firstLine: string;
     city: string;
     code: number;
-    country: Country;
+    country: string;
   };
   contact: [number, string];
   isAvailable: boolean;
@@ -79,7 +79,7 @@ const properties : {
   {
     image: "images/poland-property.jpg",
     title: "Polish Cottage",
-    price: 30,
+    price: 34,
     location: {
       firstLine: "no 23",
       city: "Gdansk",
@@ -92,7 +92,7 @@ const properties : {
   {
     image: "images/london-property.jpg",
     title: "London Flat",
-    price: 25,
+    price: 23,
     location: {
       firstLine: "flat 15",
       city: "London",
@@ -103,22 +103,14 @@ const properties : {
     isAvailable: true
   }
 ]
+isLoggedIn = true
 
 //Functions
 showReviewTotal(reviews.length, reviews[0].name, reviews[0].loyaltyUser)
 populateUser(you.isReturning, you.firstName)
+showDetails()
 
-let authorityStatus : any
 
-isLoggedIn = true
-
-function showDetails(authorityStatus : boolean | Permissions, element : HTMLDivElement, price : number) {
-  if (authorityStatus) {
-    const priceDisplay = document.createElement("div")
-    priceDisplay.innerHTML = price.toString() + "/night"
-    element.appendChild(priceDisplay)
-  }
-}
 
 //Add the properties
 for (let i =0; i < properties.length; i++) {
@@ -131,6 +123,23 @@ for (let i =0; i < properties.length; i++) {
   propertyContainer.appendChild(card)
   showDetails(isLoggedIn, card, properties[i].price)
 }
+
+let count = 0
+function addReviews(array: Review[]) : void {
+  if (!count) {
+    count++
+    const topTwo = getTopTwoReviews(array)
+    for (let i = 0; i< topTwo.length; i++) {
+      const card = document.createElement("div")
+      card.classList.add("review-card")
+      card.innerHTML = topTwo[i].stars + " stars from " + topTwo[i].name
+      reviewContainer.appendChild(card)
+    }
+    container.removeChild(button)
+  }
+}
+
+button.addEventListener("click", () => addReviews(reviews))
 
 let currentLocation: [string, string, number] = ["Cape Town", "10:35", 18]
 footer.innerHTML = currentLocation[0] + " " + currentLocation[1] + " " + currentLocation[2] + "&deg"
