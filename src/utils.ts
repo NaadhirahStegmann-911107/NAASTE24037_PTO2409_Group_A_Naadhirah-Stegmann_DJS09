@@ -5,7 +5,7 @@ import { LoyaltyUser } from "./enums"
 import { Review } from "./interfaces"
 
 export function showReviewTotal(value : number, reviewer : string, isLoyalty : LoyaltyUser) {
-  const iconDisplay = LoyaltyUser.GOLD_USER ? "⭐" : " ";
+  const iconDisplay = isLoyalty === LoyaltyUser.GOLD_USER ? "⭐" : " ";
   reviewTotalDisplay.innerHTML = value.toString() + "Review" + makeMultiple(value) + "| last reviewed by " + reviewer + " " + iconDisplay
 }
 
