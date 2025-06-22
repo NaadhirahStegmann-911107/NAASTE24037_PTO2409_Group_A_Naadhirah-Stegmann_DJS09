@@ -1,31 +1,32 @@
 const propertyContainer = document.querySelector(".properties") as HTMLElement
 const footer = document.querySelector(".footer") as HTMLElement
 import { showReviewTotal, populateUser } from "./utils"
-//let isOpen = boolean;
+import { Permissions, LoyaltyUser } from "./enums"
+let isLoggedIn: boolean
 
 //Reviews
 const reviews: {
   name: string;
   stars: number;
-  loyaltyUser: boolean;
+  loyaltyUser: LoyaltyUser;
   date: string;
 }[] = [
   {
     name: "Sheia",
     stars: 5,
-    loyaltyUser: true,
+    loyaltyUser: LoyaltyUser.GOLD_USER,
     date: "01-04-2021",
   },
   {
     name: "Andrzej",
     stars: 3,
-    loyaltyUser: false,
+    loyaltyUser: LoyaltyUser.BRONZE_USER,
     date: "28-03-2021",
   },
   {
     name: "Omar",
     stars: 4,
-    loyaltyUser: true,
+    loyaltyUser: LoyaltyUser.SILVER_USER,
     date: "27-03-2021",
   },
 ];
@@ -34,12 +35,14 @@ const reviews: {
 const you: {
   firstName : string;
   lastName: string;
+  permissions: Permissions.ADMIN;
   isReturning : boolean;
   age: number;
   stayedAt: string[];
 } = {
   firstName: "Bobby",
   lastName: "Brown",
+  permissions: Permissions.ADMIN,
   isReturning: true,
   age: 35,
   stayedAt: ["florida-home", "oman-flat", "tokyo-bungalow"]
@@ -102,8 +105,19 @@ const properties : {
 
 //Functions
 showReviewTotal(reviews.length, reviews[0].name, reviews[0].loyaltyUser)
-
 populateUser(you.isReturning, you.firstName)
+
+let authorityStatus : any
+
+isLoggedIn = true
+
+function showDetails(authorityStatus : boolean | Permissions, element : HTMLDivElement, price : number) {
+  if (authorityStatus) {
+    const priceDisplay = document.createElement("div")
+    priceDisplay.innerHTML = price.toString() + "/night"
+    element.appendChild(priceDisplay)
+  }
+}
 
 //Add the properties
 for (let i =0; i < properties.length; i++) {
@@ -114,7 +128,9 @@ for (let i =0; i < properties.length; i++) {
   image.setAttribute("src", properties[i].image)
   card.appendChild(image)
   propertyContainer.appendChild(card)
+  showDetails(isLoggedIn, card, properties[i].price)
 }
 
 let currentLocation: [string, string, number] = ["Cape Town", "10:35", 18]
 footer.innerHTML = currentLocation[0] + " " + currentLocation[1] + " " + currentLocation[2] + "&deg"
+
