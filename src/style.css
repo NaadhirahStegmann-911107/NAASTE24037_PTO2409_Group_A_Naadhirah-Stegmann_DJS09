@@ -10,6 +10,9 @@ body {
 
 .container {
   margin: 20px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
 
 .nav-bar {
@@ -56,3 +59,17 @@ body {
   color: white;
 }
 
+.review-card {
+  padding: 10px;
+}
+
+.reviews {
+  display: flex;
+  padding: 10px;
+}
+
+.break {
+  height: 1px;
+  width: 90%;
+  background-color: coral;
+}
