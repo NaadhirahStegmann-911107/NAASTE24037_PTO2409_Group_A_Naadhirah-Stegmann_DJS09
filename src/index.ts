@@ -169,7 +169,7 @@ let yourMainProperty = new MainProperty(
   }]
 )
 
-const mainImageContainer = document.querySelector(".main-image")
+const mainImageContainer = document.querySelector(".main-image") as HTMLElement
 const image = document.createElement("img")
 image.setAttribute("src", yourMainProperty.src)
 mainImageContainer.appendChild(image)
