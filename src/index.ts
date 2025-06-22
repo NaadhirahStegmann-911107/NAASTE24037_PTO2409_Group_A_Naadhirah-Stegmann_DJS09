@@ -2,7 +2,7 @@
 import { showReviewTotal, populateUser, showDetails, getTopTwoReviews } from "./utils"
 import { Permissions, LoyaltyUser } from "./enum"
 //import { Price, Country } from "./types"
-import { Review } from "./interfaces"
+import { Property, Review } from "./interfaces"
 
 const propertyContainer = document.querySelector(".properties") as HTMLElement
 const reviewContainer = document.querySelector('.reviews') as HTMLElement
@@ -52,19 +52,7 @@ const you: {
 }
 
 //Array of Properties
-const properties : {
-  image: string;
-  title: string;
-  price: number;
-  location: {
-    firstLine: string;
-    city: string;
-    code: number;
-    country: string;
-  };
-  contact: [number, string];
-  isAvailable: boolean;
-}[]= [
+const properties : Property[] = [
   {
     image: "images/columbia-property.jpg",
     title: "Columbian Shack",
@@ -81,7 +69,7 @@ const properties : {
   {
     image: "images/poland-property.jpg",
     title: "Polish Cottage",
-    price: 34,
+    price: 30,
     location: {
       firstLine: "no 23",
       city: "Gdansk",
@@ -94,15 +82,28 @@ const properties : {
   {
     image: "images/london-property.jpg",
     title: "London Flat",
-    price: 23,
+    price: 25,
     location: {
       firstLine: "flat 15",
       city: "London",
-      code: 35433,
+      code: "SW4 5XW",
       country: "United Kingdom"
     },
     contact: [+11223495082908, "andyluger@aol.com"],
     isAvailable: true
+  },
+  {
+    image: "image/malaysian-hotel.jpeg",
+    title: "Malia Hotel",
+    price: 35,
+    location:{
+      firstLine: "Room 4",
+      city: "Malia",
+      code: 45334,
+      country: "Malaysia"
+    },
+    contact: [+60349822083, "lee34@gmail.com"],
+    isAvailable: false
   }
 ]
 isLoggedIn = true
@@ -110,7 +111,6 @@ isLoggedIn = true
 //Functions
 showReviewTotal(reviews.length, reviews[0].name, reviews[0].loyaltyUser)
 populateUser(you.isReturning, you.firstName)
-showDetails()
 
 
 
@@ -146,3 +146,30 @@ button.addEventListener("click", () => addReviews(reviews))
 let currentLocation: [string, string, number] = ["Cape Town", "10:35", 18]
 footer.innerHTML = currentLocation[0] + " " + currentLocation[1] + " " + currentLocation[2] + "&deg"
 
+//Classes
+class MainProperty {
+  src: string;
+  title: string;
+  reviews: Review[];
+  constructor(src: string, title: string, reviews: Review[]) {
+    this.src = src
+    this.title = title
+    this.reviews = reviews
+  }
+}
+
+let yourMainProperty = new MainProperty(
+  "images/italian-property.jpg", 
+  "Italian House",
+  [{
+    name: "Olive",
+    stars: 5,
+    loyaltyUser: LoyaltyUser.GOLD_USER,
+    date: "12-04-2021"
+  }]
+)
+
+const mainImageContainer = document.querySelector(".main-image")
+const image = document.createElement("img")
+image.setAttribute("src", yourMainProperty.src)
+mainImageContainer.appendChild(image)
