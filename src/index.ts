@@ -1,7 +1,9 @@
+//Modules
 import { showReviewTotal, populateUser, showDetails, getTopTwoReviews } from "./utils"
 import { Permissions, LoyaltyUser } from "./enum"
 //import { Price, Country } from "./types"
 import { Review } from "./interfaces"
+
 const propertyContainer = document.querySelector(".properties") as HTMLElement
 const reviewContainer = document.querySelector('.reviews') as HTMLElement
 const container = document.querySelector('.container') as HTMLElement
