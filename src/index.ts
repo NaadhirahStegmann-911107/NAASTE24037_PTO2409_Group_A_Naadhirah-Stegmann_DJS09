@@ -1,8 +1,8 @@
-const returningUserDisplay = document.querySelector("#returning-user") as HTMLElement;const userNameDisplay = document.querySelector("#user") as HTMLElement;
-const reviewTotalDisplay = document.querySelector("#reviews") as HTMLElement;
+import { showReviewTotal, populateUser } from "./utils"
+
 //let isOpen = boolean;
 
-
+//Reviews
 const reviews: {
   name: string;
   stars: number;
@@ -29,13 +29,7 @@ const reviews: {
   },
 ];
 
-function showReviewTotal(value : number, reviewer : string, isLoyalty : boolean) {
-  const iconDisplay = isLoyalty ? "⭐" : " ";
-  reviewTotalDisplay.innerHTML = "review total " + value.toString() + " last reviewed by " + reviewer + " " + iconDisplay
-}
-
-showReviewTotal(reviews.length, reviews[0].name, reviews[0].loyaltyUser)
-
+//User
 const you: {
   firstName : string;
   lastName: string;
@@ -50,11 +44,62 @@ const you: {
   stayedAt: ["florida-home", "oman-flat", "tokyo-bungalow"]
 }
 
-function populateUser(isReturning : boolean, userName : string) {
-  if (isReturning){
-    returningUserDisplay.innerHTML = "back"
+//Properties
+const properties : {
+  image: string;
+  title: string;
+  price: number;
+  location: {
+    firstLine: string;
+    city: string;
+    code: number;
+    country: string;
+  };
+  contact: string;
+  isAvailable: boolean;
+}[]= [
+  {
+    image: "",
+    title: "Columbian Shack",
+    price: 45,
+    location: {
+      firstLine: "shack 37",
+      city: "Bogota",
+      code: 45632,
+      country: "Columbia"
+    },
+    contact: "marywinkle@gmail.com",
+    isAvailable: true
+  },
+  {
+    image: "",
+    title: "Polish Cottage",
+    price: 34,
+    location: {
+      firstLine: "no 23",
+      city: "Gdansk",
+      code: 343903,
+      country: "Poland"
+    },
+    contact: "garydavis@hotmail.com",
+    isAvailable: false
+  },
+  {
+    image: "",
+    title: "London Flat",
+    price: 23,
+    location: {
+      firstLine: "flat 15",
+      city: "London",
+      code: 35433,
+      country: "London"
+    },
+    contact: "andyluger@aol.com",
+    isAvailable: true
   }
-  userNameDisplay.innerHTML = userName
-}
+]
+
+//Functions
+showReviewTotal(reviews.length, reviews[0].name, reviews[0].loyaltyUser)
 
 populateUser(you.isReturning, you.firstName)
