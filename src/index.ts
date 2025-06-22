@@ -1,8 +1,8 @@
 //Modules
 import { showReviewTotal, populateUser, showDetails, getTopTwoReviews } from "./utils"
-import { Permissions, LoyaltyUser } from "./enum"
-//import { Price, Country } from "./types"
+import { Permissions, LoyaltyUser } from "./enums"
 import { Property, Review } from "./interfaces"
+import MainProperty from "./classes"
 
 const propertyContainer = document.querySelector(".properties") as HTMLElement
 const reviewContainer = document.querySelector('.reviews') as HTMLElement
@@ -146,17 +146,6 @@ button.addEventListener("click", () => addReviews(reviews))
 let currentLocation: [string, string, number] = ["Cape Town", "10:35", 18]
 footer.innerHTML = currentLocation[0] + " " + currentLocation[1] + " " + currentLocation[2] + "&deg"
 
-//Classes
-class MainProperty {
-  src: string;
-  title: string;
-  reviews: Review[];
-  constructor(src: string, title: string, reviews: Review[]) {
-    this.src = src
-    this.title = title
-    this.reviews = reviews
-  }
-}
 
 let yourMainProperty = new MainProperty(
   "images/italian-property.jpg", 
