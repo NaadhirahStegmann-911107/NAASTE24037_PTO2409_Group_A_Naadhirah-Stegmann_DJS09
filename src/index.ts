@@ -3,6 +3,7 @@ const footer = document.querySelector(".footer") as HTMLElement
 import { showReviewTotal, populateUser } from "./utils"
 import { Permissions, LoyaltyUser } from "./enums"
 let isLoggedIn: boolean
+import { Price, Country } from "./types"
 
 //Reviews
 const reviews: {
@@ -52,12 +53,12 @@ const you: {
 const properties : {
   image: string;
   title: string;
-  price: number;
+  price: Price;
   location: {
     firstLine: string;
     city: string;
     code: number;
-    country: string;
+    country: Country;
   };
   contact: [number, string];
   isAvailable: boolean;
@@ -78,7 +79,7 @@ const properties : {
   {
     image: "images/poland-property.jpg",
     title: "Polish Cottage",
-    price: 34,
+    price: 30,
     location: {
       firstLine: "no 23",
       city: "Gdansk",
@@ -91,12 +92,12 @@ const properties : {
   {
     image: "images/london-property.jpg",
     title: "London Flat",
-    price: 23,
+    price: 25,
     location: {
       firstLine: "flat 15",
       city: "London",
       code: 35433,
-      country: "London"
+      country: "United Kingdom"
     },
     contact: [+11223495082908, "andyluger@aol.com"],
     isAvailable: true
